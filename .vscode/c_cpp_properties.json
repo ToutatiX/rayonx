@@ -508,7 +508,7 @@
                 "FACTORY_JWT_SECRET=\"#{random}-#{random}\"",
                 "FT_PROJECT=1",
                 "FT_SECURITY=0",
-                "FT_MQTT=0",
+                "FT_MQTT=1",
                 "FT_NTP=0",
                 "FT_OTA=1",
                 "FT_UPLOAD_FIRMWARE=1",

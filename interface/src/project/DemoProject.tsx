@@ -12,7 +12,7 @@ import LightMqttSettingsForm from './LightMqttSettingsForm';
 import LightStateWebSocketForm from './LightStateWebSocketForm';
 
 const DemoProject: FC = () => {
-  useLayoutTitle("Demo Project");
+  useLayoutTitle("Radio Settings");
   const { routerTab } = useRouterTab();
 
   return (

@@ -9,11 +9,11 @@ const ProjectRouting: FC = () => {
       {
         // Add the default route for your project below
       }
-      <Route path="/*" element={<Navigate to="demo/information" />} />
+      <Route path="/*" element={<Navigate to="settings/information" />} />
       {
         // Add your project page routes below.
       }
-      <Route path="demo/*" element={<DemoProject />} />
+      <Route path="settings/*" element={<DemoProject />} />
     </Routes>
   );
 };
