@@ -9,22 +9,27 @@ import { RequiredChildrenProps } from './utils';
 const theme = responsiveFontSizes(
   createTheme({
     palette: {
-      background: {
-        default: "#fafafa"
+      text: {
+        primary: '#000',
+        secondary: '#000',
       },
-      primary: indigo,
-      secondary: blueGrey,
-      info: {
+      primary: {
         main: indigo[500]
       },
+      secondary: {
+        main: blueGrey[800]
+      },
+      info: {
+        main: indigo[800]
+      },
       warning: {
-        main: orange[500]
+        main: orange[800]
       },
       error: {
-        main: red[500]
+        main: red[800]
       },
       success: {
-        main: green[500]
+        main: green[800]
       }
     }
   })

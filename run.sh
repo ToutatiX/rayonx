@@ -1,7 +1,7 @@
 echo "Please type one of the following commands:"
 echo "  'fp' to preview the frontend in localhost"
 echo "  'up' to upload on the board"
-echo "  'im' to upload image on the board"
+echo "  'er' erase flash"
 echo "  'bu' to compile the programm"
 echo "  'mt' to monitor"
 echo
@@ -19,8 +19,8 @@ do
       pio run -t upload
 		  break
 		;;
-  im)
-      pio run -t uploadfs
+  er)
+      pio run -t erase
 		  break
 		;;
   bu)
