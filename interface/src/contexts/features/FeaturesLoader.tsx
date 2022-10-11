@@ -4,7 +4,7 @@ import * as FeaturesApi from '../../api/features';
 
 import { extractErrorMessage, RequiredChildrenProps } from '../../utils';
 import { Features } from '../../types';
-import {ApplicationError, LoadingSpinner} from '../../components';
+import { ApplicationError, LoadingSpinner } from '../../components';
 
 import { FeaturesContext } from '.';
 
@@ -45,7 +45,7 @@ const FeaturesLoader: FC<RequiredChildrenProps> = (props) => {
   }
 
   return (
-    <LoadingSpinner height="100vh" />
+    <LoadingSpinner/>
   );
 
 };

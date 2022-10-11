@@ -2,9 +2,6 @@ import { FC, useContext, useState } from 'react';
 import { ValidateFieldsError } from 'async-validator';
 import { useSnackbar } from 'notistack';
 
-import { Box, Fab, Paper, Typography } from '@mui/material';
-import ForwardIcon from '@mui/icons-material/Forward';
-
 import * as AuthenticationApi from './api/authentication';
 import { PROJECT_NAME } from './api/env';
 import { SignInRequest } from './types';
