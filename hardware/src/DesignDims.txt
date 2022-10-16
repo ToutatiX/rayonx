@@ -1,0 +1,1 @@
+﻿"boxInteriorDiam" = 64"speakerCenterDist" = 40"speakerDiam" = 50"bearing_ext_diam" = 16"bearing_int_diam" = 5"bearing_thick" = 5
