@@ -18,9 +18,6 @@ const LayoutMenuItem: FC<LayoutMenuItemProps> = ({ icon: Icon, label, to, disabl
   return (
     <ListItem disablePadding selected={routeMatches(to, pathname)}>
       <ListItemButton component={Link} to={to} disabled={disabled}>
-        <ListItemIcon>
-          <Icon />
-        </ListItemIcon>
         <ListItemText>{label}</ListItemText>
       </ListItemButton>
     </ListItem>

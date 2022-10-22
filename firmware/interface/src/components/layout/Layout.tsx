@@ -29,13 +29,9 @@ const Layout: FC<RequiredChildrenProps> = ({ children }) => {
     <LayoutContext.Provider value={{ title, setTitle }}>
       <LayoutAppBar title={title} onToggleDrawer={handleDrawerToggle} />
       <LayoutDrawer mobileOpen={mobileOpen} onClose={handleDrawerToggle} />
-      <Box
-        component="main"
-        sx={{ marginLeft: { md: `${DRAWER_WIDTH}px` } }}
-      >
-        <Toolbar />
+      <div style={{ marginLeft: DRAWER_WIDTH+"px", padding: 0+"px"}}>
         {children}
-      </Box>
+      </div>
     </LayoutContext.Provider >
   );
 

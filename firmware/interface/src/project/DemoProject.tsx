@@ -1,6 +1,4 @@
-
-import React, { FC } from 'react';
-import { useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import '../style/App.css';
 import { UseWindowDimensions } from '../hooks/useWindowDimensions'
 import LogoSVG from "../images/LogoBoar.svg"
@@ -23,7 +21,8 @@ function Lines() {
 	const [showFullHeader, setFullHeader] = useState(true)
 	const [showFullFooter, setFullFooter] = useState(true)
 
-	const { height, width } = UseWindowDimensions()
+
+	const {width, height} = UseWindowDimensions();
 
 	const logo_size = 0.42
 	const hex_radius : number = Math.min(width * 0.3, height*0.15);
@@ -406,7 +405,7 @@ const DemoProject: FC = () => {
   let lines = Lines()
 
 	return (
-		<main className="App bg">
+		<main className="MainApp bg">
 				{lines.svg}
 				{lines.div}
 		</main>

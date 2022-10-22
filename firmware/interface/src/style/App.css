@@ -1,85 +1,87 @@
-body {
-    height: 100vh;
-    width: 100vw;
-    font-size: min(2vh, 4vw);
-    overflow: hidden;
+body .MainApp{
+  height: 100vh;
+  width: 100vw;
+  font-size: min(2vh, 4vw);
+  overflow: hidden;
+  background-color: red;
+}
+
+svg {
+  stroke-linecap: round;
+  fill: none;
+  stroke-width: max(1px, min(0.2vh, 0.4vw));
+  stroke: #000;
+  height: 100vh;
+  width: 100vw;
+}
+
+
+div .animatedDiv {
+  transition: all 400ms;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.7, 1);
+}
+
+svg .thickSVG {
+  stroke-width: max(2px, min(0.4vh, 0.8vw));
+}
+
+svg path{
+  transition: all 400ms;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.7, 1);
+}
+
+
+div .boarLogo{
+  position: absolute;
+}
+
+div .selectionMenu {
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+}
+
+.fillSVG {
+  position: relative;
+  fill: #ede5cf;
+}
+
+.clickable:hover{
+  cursor: pointer;
+}
+
+.verticalText {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  position: absolute;
+  overflow: hidden; 
+  line-height: 4rem;
+}
+
+.verticalText:hover {
+  cursor: pointer;
+}
+
+.verticalText #rolltext {
+  animation: slide 5s infinite;    
+}
+
+@keyframes slide {
+  0%{
+    top:0;
   }
-  
-  svg {
-    stroke-linecap: round;
-    fill: none;
-    stroke-width: max(1px, min(0.2vh, 0.4vw));
-    stroke: #000;
-    height: 100vh;
-    width: 100vw;
+  25%{
+    top: -4rem;    
   }
-  
-  .bg {
-    background-color:  #fff;
+  50%{
+    top: -8rem;
   }
-  
-  div .animatedDiv {
-    transition: all 400ms;
-    transition-timing-function: cubic-bezier(0.3, 0, 0.7, 1);
+  72.5%{
+    top: -12.25rem;
   }
-  
-  svg .thickSVG {
-    stroke-width: max(2px, min(0.4vh, 0.8vw));
-  }
-  
-  svg path{
-    transition: all 400ms;
-    transition-timing-function: cubic-bezier(0.3, 0, 0.7, 1);
-  }
-  
-  
-  div .boarLogo{
-    position: absolute;
-  }
-  
-  div .selectionMenu {
-    position: absolute;
-    top: 50vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
-  }
-  
-  .fillSVG {
-    position: relative;
-    fill: #ede5cf;
-  }
-  
-  .clickable:hover{
-    cursor: pointer;
-  }
-  
-  .verticalText {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    position: absolute;
-    overflow: hidden; 
-    line-height: 4rem;
-  }
-  
-  .verticalText:hover {
-    cursor: pointer;
-  }
-  
-  .verticalText #rolltext {
-    animation: slide 5s infinite;    
-  }
-  
-  @keyframes slide {
-    0%{
-      top:0;
-    }
-    25%{
-      top: -4rem;    
-    }
-    50%{
-      top: -8rem;
-    }
-    72.5%{
-      top: -12.25rem;
-    }
-  }
+}
+
+#root {
+    background-color: blue;
+}
