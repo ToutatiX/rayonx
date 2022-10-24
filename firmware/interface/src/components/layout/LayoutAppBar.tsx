@@ -27,7 +27,16 @@ const LayoutAppBar: FC<LayoutAppBarProps> = ({ title, onToggleDrawer }) => {
         boxShadow: 'none'
       }}
     >
-      <Toolbar>
+      
+    </AppBar>
+  );
+};
+
+export default LayoutAppBar;
+
+/*
+
+<Toolbar>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -43,8 +52,5 @@ const LayoutAppBar: FC<LayoutAppBarProps> = ({ title, onToggleDrawer }) => {
         <Box flexGrow={1} />
         {features.security && <LayoutAuthMenu />}
       </Toolbar>
-    </AppBar>
-  );
-};
 
-export default LayoutAppBar;
+*/

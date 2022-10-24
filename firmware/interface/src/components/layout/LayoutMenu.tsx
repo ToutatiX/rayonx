@@ -23,7 +23,6 @@ const LayoutMenu: FC = () => {
       {features.project && (
         <List disablePadding component="nav">
           <ProjectMenu />
-          <Divider />
         </List>
       )}
       <List disablePadding component="nav">
@@ -32,7 +31,7 @@ const LayoutMenu: FC = () => {
         {features.ntp && (
           <LayoutMenuItem icon={AccessTimeIcon} label="Network Time" to="/ntp" />
         )}
-        {features.mqtt && (
+        {features.mqtt && false && (  // TO CHANGE
           <LayoutMenuItem icon={DeviceHubIcon} label="MQTT" to="/mqtt" />
         )}
         {features.security && (

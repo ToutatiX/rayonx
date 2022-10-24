@@ -51,58 +51,7 @@ const SignIn: FC = () => {
   const submitOnEnter = onEnterCallback(signIn);
 
   return (
-    <Box
-      display="flex"
-      height="100vh"
-      margin="auto"
-      padding={2}
-      justifyContent="center"
-      flexDirection="column"
-      maxWidth={(theme) => theme.breakpoints.values.sm}
-    >
-      <Paper
-        sx={(theme) => ({
-          textAlign: "center",
-          padding: theme.spacing(2),
-          paddingTop: "200px",
-          backgroundImage: 'url("/app/icon.png")',
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "50% " + theme.spacing(2),
-          backgroundSize: "auto 150px",
-          width: "100%"
-        })}
-      >
-        <Typography variant="h4">{PROJECT_NAME}</Typography>
-        <ValidatedTextField
-          fieldErrors={fieldErrors}
-          disabled={processing}
-          name="username"
-          label="Username"
-          value={signInRequest.username}
-          onChange={updateLoginRequestValue}
-          margin="normal"
-          variant="outlined"
-          fullWidth
-        />
-        <ValidatedTextField
-          fieldErrors={fieldErrors}
-          disabled={processing}
-          type="password"
-          name="password"
-          label="Password"
-          value={signInRequest.password}
-          onChange={updateLoginRequestValue}
-          onKeyDown={submitOnEnter}
-          margin="normal"
-          variant="outlined"
-          fullWidth
-        />
-        <Fab variant="extended" color="primary" sx={{ mt: 2 }} onClick={validateAndSignIn} disabled={processing}>
-          <ForwardIcon sx={{ mr: 1 }} />
-          Sign In
-        </Fab>
-      </Paper>
-    </Box>
+   <></>
   );
 };
 

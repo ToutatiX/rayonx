@@ -1,0 +1,33 @@
+
+[
+    {
+        "radioName" : "OuiFM",
+        "streaming_url" : "Undefined",
+        "icon_url" : "https://bocir-prod-bucket.s3.amazonaws.com/radios/oui-fm/images/favicon.ico"
+    },
+    {
+        "radioName" : "FranceInter",
+        "streaming_url" : "Undefined",
+        "icon_url" : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/France_Inter_logo_2021.svg/1200px-France_Inter_logo_2021.svg.png"
+    },
+    {
+        "radioName" : "Europe 1",
+        "streaming_url" : "Undefined",
+        "icon_url" : "https://cdn-europe1.lanmedia.fr/europe1/apple-touch-icon.png"
+    },
+    {
+        "radioName" : "BBC1",
+        "streaming_url" : "Undefined",
+        "icon_url" : "https://cdn-radiotime-logos.tunein.com/s24939q.png"
+    },
+    {
+        "radioName" : "Absolute",
+        "streaming_url" : "Undefined",
+        "icon_url" : "http://distortionradio.com/apple-touch-icon-120x120.png"
+    },
+    {
+        "radioName" : "Jazz FM",
+        "streaming_url" : "Undefined",
+        "icon_url" : "https://jazz.fm/app/uploads/cropped-jazzfavicon-375x375.png"
+    }
+]
