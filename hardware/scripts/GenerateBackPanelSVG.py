@@ -24,6 +24,13 @@ def main():
 
     doc.styles.new('myStandard', dxfattribs={'font' : 'Classical Garamond.ttf'})
 
+    logo_doc = ezdxf.new()
+
+    importer = Importer(doc, logo_doc)
+    importer.import_modelspace()
+    importer.import_paperspace_layouts()
+    importer.finalize()
+
     changeColorAll(msp, 1)
 
     center_y = 52
@@ -58,10 +65,20 @@ def main():
     msp.add_line((center_y-16, 0), (center_y+16, 0), dxfattribs={'color': 250})
     msp.add_line((center_y-16, 0.5), (center_y+16, 0.5), dxfattribs={'color': 250})
 
-    fig, _ = createFigure(doc)
+    fig, ax = createFigure(doc)
+    logo = plt.imread(folder+'../scripts/public/Logo.png')
+    imagebox = OffsetImage(logo, zoom=40/1080)
+    ab = AnnotationBbox(imagebox, (center_y, 6), frameon = False)
+    ax.add_artist(ab)
 
     fig.savefig(folder+"BackPanel.svg", format='svg')
     plt.close(fig)
+
+    fin = open(folder + "BackPanel.svg", "rt").readlines()
+    del fin[23:31]
+    out = open(folder + "BackPanel.svg", 'wt')
+    out.writelines(fin)
+    out.close()
 
 if __name__ == '__main__':
     main()

@@ -5,6 +5,7 @@ import ezdxf
 from ezdxf.addons.drawing import RenderContext, Frontend 
 from ezdxf.addons.drawing.matplotlib import MatplotlibBackend
 import os
+from ezdxf.addons import Importer
 
 def createFigure(doc) :
     
