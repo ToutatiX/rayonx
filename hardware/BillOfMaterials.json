@@ -1,0 +1,12 @@
+[
+    {
+        "name" : "M3x4mm Screw",
+        "type" : "Sourced",
+        "price" : "0.1"
+    },
+    {
+        "name" : "M3x10mm Screw",
+        "type" : "Sourced",
+        "price" : "0.12"
+    }
+]
