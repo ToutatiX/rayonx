@@ -16,17 +16,10 @@ def main():
     center_y = 52
     hs = 0.86602540378
 
+
     coor = [[center_y, 18], [center_y, -18],
             [center_y + 18*hs,18/2],  [center_y + 18*hs, -18/2],
             [center_y - 18*hs,18/2],  [center_y - 18*hs, -18/2]]
-
-    for c in coor:
-        msp.add_circle(
-        # Use UCS coordinates to place the 2d circle in 3d space
-        center=(c),
-        radius=5.4,
-        dxfattribs={'color': 250}
-    )
 
     try:
         presets = json.load(open(folder+'../configs/presets.config.json'))

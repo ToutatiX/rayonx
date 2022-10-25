@@ -56,19 +56,25 @@ def main():
         "color": 250
         }
 
-    msp.add_mtext("Made in "+info["city"], style_top).set_location((center_y, 16))
-    msp.add_mtext(info["project_name"], style_title).set_location((center_y, -4))
-    msp.add_mtext("Par ToutatiX", style_subtitle).set_location((center_y, -8))
+    msp.add_mtext("Made in "+info["city"], style_top).set_location((center_y, 20))
+    msp.add_mtext(info["project_name"], style_title).set_location((center_y, -3.8))
+    msp.add_mtext("Par ToutatiX", style_subtitle).set_location((center_y, -7))
     msp.add_mtext("Manufacturé par", style_subtitle).set_location((center_y, -14))
 
     # Add lines between the title and the subtitle
-    msp.add_line((center_y-16, 0), (center_y+16, 0), dxfattribs={'color': 250})
-    msp.add_line((center_y-16, 0.5), (center_y+16, 0.5), dxfattribs={'color': 250})
+    hatch = msp.add_hatch(color=250)
+    hatch.paths.add_polyline_path(
+        [(center_y-16, 0), (center_y+16, 0), (center_y+16, -0.1), (center_y-16, -0.1)], is_closed=True
+    )
+    hatch2 = msp.add_hatch(color=250)
+    hatch2.paths.add_polyline_path(
+        [(center_y-16, 0.4), (center_y+16, 0.4), (center_y+16, 0.8), (center_y-16, 0.8)], is_closed=True
+    )
 
     fig, ax = createFigure(doc)
     logo = plt.imread(folder+'../scripts/public/Logo.png')
     imagebox = OffsetImage(logo, zoom=40/1080)
-    ab = AnnotationBbox(imagebox, (center_y, 6), frameon = False)
+    ab = AnnotationBbox(imagebox, (center_y, 6.3), frameon = False)
     ax.add_artist(ab)
 
     fig.savefig(folder+"BackPanel.svg", format='svg')
