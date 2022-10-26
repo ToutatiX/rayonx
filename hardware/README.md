@@ -1,4 +1,5 @@
-# Bill of Materials|     Name    |           Quantity|              Price   |                     Id           |
+# Bill of Materials
+|     Name    |           Quantity|              Price   |                     Id           |
 |-------------|-------------------|----------------------|----------------------------------|
 | M3x4mm Screw|           4       |                  0.02|                      ?           |
 |M3x10mm Screw|          3        |                  0.02|                      ?           |

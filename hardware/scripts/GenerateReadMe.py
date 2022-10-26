@@ -6,7 +6,7 @@ dirname = os.path.dirname(__file__)
 df = pd.read_csv(os.path.join(dirname, "../BillOfMaterials.csv"))
 bom = markdownTable(df.to_dict(orient='records')).setParams(row_sep = 'markdown', padding_weight = 'centerleft', quote=False).getMarkdown()
 
-preamble = "# Bill of Materials"
+preamble = "# Bill of Materials\n"
 
 f = open(os.path.join(dirname, "../README.md"), "w")
 f.write(preamble + bom)
