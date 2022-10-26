@@ -1,6 +1,6 @@
-```|     Name    |           Quantity|              Price   |                     Id           |
+|     Name    |           Quantity|              Price   |                     Id           |
 |-------------|-------------------|----------------------|----------------------------------|
 | M3x4mm Screw|           4       |                  0.02|                      ?           |
 |M3x10mm Screw|          3        |                  0.02|                      ?           |
 | PAM8403     |    Audio Amplifier|       AZ-Delivery    |          4251850500912           |
-|    ESP32    |              1    |                    6 |              ?                   |```
+|    ESP32    |              1    |                    6 |              ?                   |
