@@ -6,20 +6,23 @@ from pyradios import RadioBrowser
 from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 import matplotlib.font_manager as font_manager
 
-info = {"project_name" : "RAYONX",
-        "city": "Zürich"}
 
 def main():
-    global info
-
-    dirname = os.path.dirname(__file__)
-    custom_fonts_paths = os.path.join(dirname, "../scripts/fonts")
-
-    for font in font_manager.findSystemFonts(custom_fonts_paths):
-        font_manager.fontManager.addfont(font)
 
     dirname = os.path.dirname(__file__)
     folder = os.path.join(dirname, "../cutting/")
+
+    try:
+        info = json.load(open(folder+'../configs/product.config.json'))
+    except IOError:
+        print(f"File `presets.config` not found :(")
+        sys.exit(1)
+
+    custom_fonts_paths = os.path.join(dirname, "../scripts/fonts")
+    
+    for font in font_manager.findSystemFonts(custom_fonts_paths):
+        font_manager.fontManager.addfont(font)
+
     doc, msp = openDXF(folder+"DXF/BackPanel.DXF")
 
     doc.styles.new('myStandard', dxfattribs={'font' : 'Classical Garamond.ttf'})
@@ -64,7 +67,7 @@ def main():
     # Add lines between the title and the subtitle
     hatch = msp.add_hatch(color=250)
     hatch.paths.add_polyline_path(
-        [(center_y-16, 0), (center_y+16, 0), (center_y+16, -0.1), (center_y-16, -0.1)], is_closed=True
+        [(center_y-16, 0), (center_y+16, 0), (center_y+16, -0.2), (center_y-16, -0.2)], is_closed=True
     )
     hatch2 = msp.add_hatch(color=250)
     hatch2.paths.add_polyline_path(
