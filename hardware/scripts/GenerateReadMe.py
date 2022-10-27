@@ -4,7 +4,7 @@ from markdownTable import markdownTable
 
 dirname = os.path.dirname(__file__)
 df = pd.read_csv(os.path.join(dirname, "../BillOfMaterials.csv"))
-bom = markdownTable(df.to_dict(orient='records')).setParams(row_sep = 'markdown', padding_weight = 'centerleft', quote=False).getMarkdown()
+bom = markdownTable(df.to_dict(orient='records')).setParams(row_sep = 'markdown', padding_weight = 'centerleft', quote=False, padding_width=2).getMarkdown()
 
 preamble = "# Bill of Materials\n"
 

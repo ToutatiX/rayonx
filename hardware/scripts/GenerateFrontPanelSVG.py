@@ -1,4 +1,4 @@
-from DXFUtils import *
+from utils.DXFHandler import *
 import json
 import imageio.v3 as iio
 from pyradios import RadioBrowser
@@ -47,6 +47,12 @@ def main():
 
     fig.savefig(folder+"FrontPanel.svg", format='svg')
     plt.close(fig)
+
+    fin = open(folder + "FrontPanel.svg", "rt").readlines()
+    del fin[23:31]
+    out = open(folder + "FrontPanel.svg", 'wt')
+    out.writelines(fin)
+    out.close()
 
 if __name__ == '__main__':
     main()

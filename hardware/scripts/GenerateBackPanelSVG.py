@@ -1,5 +1,5 @@
 from genericpath import isfile
-from DXFUtils import *
+from utils.DXFHandler import *
 import json
 import imageio.v3 as iio
 from pyradios import RadioBrowser
