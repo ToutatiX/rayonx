@@ -1,3 +1,85 @@
 {
     "project_name" : "RAYONX",
-    "city": "Zürich"}
+    "city": "Zürich",
+    "bom" : {
+        "sourced" : [
+            [
+                "Amplifier",
+                "PAM8043",
+                "AzDelivery",
+                4
+            ],
+            [
+                "M3 Screw",
+                "M3x10mm Cap head",
+                "any",
+                4
+            ],
+            [
+                "M3 Screw",
+                "M3x4mm Cap head",
+                "any",
+                4
+            ]
+        ],
+        "non-sourced" : {
+            "3D_printing" : [
+                [
+                    "Main",
+                    1,
+                    "PLA",
+                    26,
+                    "No",
+                    0.2
+                ],
+                [
+                    "Indexer",
+                    1,
+                    "PLA",
+                    26,
+                    "No",
+                    0.2
+                ]
+            ],
+            "CNC" : [
+                [
+                    "BoxFront",
+                    1,
+                    "Pin",
+                    130,
+                    90
+                ],
+                [
+                    "BoxBack",
+                    1,
+                    "Pin 25mm",
+                    130,
+                    90
+                ],
+                [
+                    "Cap",
+                    1,
+                    "Oak 10mm",
+                    21,
+                    21
+                ]
+            ],
+            "laser-cutting" : [
+                [
+                    "PanelFront",
+                    1,
+                    "MDF 3mm",
+                    118,
+                    72
+                ],
+                [
+                    "PanelBack",
+                    1,
+                    "MDF 3mm",
+                    118,
+                    72
+                ]
+            ]
+        }
+    }
+}
