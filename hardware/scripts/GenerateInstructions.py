@@ -1,7 +1,7 @@
 from genericpath import isfile
 import os
 import sys
-from pylatex import Document, LongTable, MultiColumn, MiniPage, LineBreak, VerticalSpace, StandAloneGraphic, Hyperref, Tabular, Table
+from pylatex import Document, LongTable, MultiColumn, MiniPage, LineBreak, VerticalSpace, StandAloneGraphic, Hyperref, Tabular, Command, HorizontalSpace
 from pylatex.base_classes import Environment, CommandBase, Arguments
 from pylatex.package import Package
 from pylatex import Document, Section, UnsafeCommand, LongTabu, Tabu, Center
@@ -10,13 +10,18 @@ import json
 
 dirname = os.path.dirname(__file__)
 
-margin = 2.54
+margin = 1.5
 
 geometry_options = {
     "margin": str(margin)+"cm",
-    "includeheadfoot": False
+    "paper" : "a4paper",
+	"headheight":"0.75cm",
+	"footskip":"1cm",
+	"headsep":"0.5cm"
 }
-doc = Document(page_numbers=True, geometry_options=geometry_options)
+doc = Document(page_numbers=True, documentclass='extarticle', inputenc='utf8', geometry_options=geometry_options, indent=False, lmodern = False)
+
+doc.packages.append(Package('raleway', 'default'))
 
 try:
     info = json.load(open(os.path.join(dirname, "../configs/product.config.json")))
@@ -68,7 +73,7 @@ class Title(CommandBase):
     packages = [Package('color'), Package('moresize')]
 
 title_command = UnsafeCommand('newcommand', '\hugetitle', options=1,
-                             extra_arguments=r'\noindent \colorbox{black}{\Huge{\textcolor{white}{\textbf{\MakeUppercase{#1}}}}}')
+                             extra_arguments=r'\noindent \colorbox{black}{\HUGE{\textcolor{white}{\textbf{\MakeUppercase{#1}}}}}')
 
 doc.append(title_command)
 
@@ -96,16 +101,18 @@ with doc.create(MiniPage(align='l')):
         with doc.create(MiniPage(width=str(1/5*(21-2*margin))+r"cm", align='l')):
             with doc.create(MiniPage(width=r"5mm", align='l')) as logo_wrapper:
                 logo_file = os.path.join(dirname, './public/GlobeIcon.png')
-                logo_wrapper.append(StandAloneGraphic(image_options="width=5mm",
+                logo_wrapper.append(StandAloneGraphic(image_options="width=7mm",
                                     filename=logo_file))
-            doc.append(Hyperref("toutatix.fr", "   toutatix.fr")) ; doc.append(LineBreak())
+            doc.append(HorizontalSpace('4mm'))
+            doc.append(Hyperref("toutatix.fr", "toutatix.fr")) ; doc.append(LineBreak())
         doc.append(LineBreak())
         with doc.create(MiniPage(width=str(1/5*(21-2*margin))+r"cm", align='l')):
             with doc.create(MiniPage(width=r"5mm", align='l')) as logo_wrapper:
                 logo_file = os.path.join(dirname, './public/EmailIcon.png')
-                logo_wrapper.append(StandAloneGraphic(image_options="width=5mm",
+                logo_wrapper.append(StandAloneGraphic(image_options="width=7mm",
                                     filename=logo_file))
-            doc.append(Hyperref("mailto:eliott.sarrey@toutatix.fr","   info@toutatix.fr"))
+            doc.append(HorizontalSpace('4mm'))
+            doc.append(Hyperref("mailto:eliott.sarrey@toutatix.fr","info@toutatix.fr"))
        
 doc.content_separator
 doc.append(VerticalSpace('12mm'))
