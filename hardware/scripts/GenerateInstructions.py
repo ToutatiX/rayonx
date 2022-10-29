@@ -7,6 +7,8 @@ from pylatex.package import Package
 from pylatex import Document, Section, UnsafeCommand, LongTabu, Tabu, Center
 from pylatex.utils import NoEscape, bold
 import json
+from datetime import datetime, timedelta
+from PyPDF2 import PdfMerger, PdfFileMerger
 
 dirname = os.path.dirname(__file__)
 
@@ -28,6 +30,9 @@ try:
 except IOError:
     print(f"File `presets.config` not found :(")
     sys.exit(1)
+
+document_delivery = datetime.fromisoformat(info["document_delivery"])
+validity = document_delivery + timedelta(days = 31)
 
 
 """
@@ -91,6 +96,7 @@ with doc.create(MiniPage(align='c')) as logo_wrapper:
             logo_wrapper.append(StandAloneGraphic(image_options="width=25mm",
                                 filename=logo_file))
 
+doc.append(VerticalSpace('4mm'))
 doc.append(LineBreak())
 
 with doc.create(MiniPage(align='l')):
@@ -113,13 +119,44 @@ with doc.create(MiniPage(align='l')):
                                     filename=logo_file))
             doc.append(HorizontalSpace('4mm'))
             doc.append(Hyperref("mailto:eliott.sarrey@toutatix.fr","info@toutatix.fr"))
-       
+
+
+"""
+DELIVERY INFORMATION AND FABLAB NAME
+"""
+
+doc.content_separator
+doc.append(VerticalSpace('8mm'))
+doc.append(LineBreak())
+
+with doc.create(MiniPage(align='c')):
+    with doc.create(MiniPage(align='l', width='4cm')) as delivery_info:
+        delivery_info.append("Document delivery:")
+        doc.append(LineBreak())
+        delivery_info.append("Document valid until:")
+        doc.append(LineBreak())
+        delivery_info.append("Order Number:")
+        doc.append(LineBreak())
+        delivery_info.append("Client name:")
+        doc.append(LineBreak())
+        delivery_info.append("FabLab:")
+
+
+    with doc.create(MiniPage(align='l', width='6cm')) as delivery_info:
+        delivery_info.append(document_delivery.strftime("%A %B %d %Y"))
+        doc.append(LineBreak())
+        delivery_info.append(validity.strftime("%A %B %d %Y"))
+        doc.append(LineBreak())
+        delivery_info.append(info["order"])
+        doc.append(LineBreak())
+        delivery_info.append(info["client"])
+        doc.append(LineBreak())
+        delivery_info.append(info["fablab"])
+
 doc.content_separator
 doc.append(VerticalSpace('12mm'))
 doc.append(LineBreak())
 
-#doc.append(Hyperref("toutatix.fr", "toutatix.fr")) ; doc.append(LineBreak())
-#doc.append(Hyperref("mailto:eliott.sarrey@toutatix.fr","info@toutatix.fr"))     
 
 """
 SOURCED COMPONENTS SECTION
@@ -210,4 +247,16 @@ with doc.create(LongTable("c|c|c|c|c")) as data_table:
 PDF GENERATION
 """
 
-doc.generate_pdf(os.path.join(dirname, "../InstructionsHardware"), clean_tex=True)
+doc.generate_pdf(os.path.join(dirname, "../tmp"), clean_tex=True)
+
+merger = PdfMerger()
+merger.append(os.path.join(dirname, "../scripts/public/FrontPage.pdf"))
+merger.append(os.path.join(dirname, "../tmp.pdf"))
+
+merger.write(os.path.join(dirname, "../InstructionsHardware.pdf"))
+merger.close()
+
+try:
+    os.remove(os.path.join(dirname, "../tmp.pdf"))
+except:
+    print("Could not delete tmp pdf file")

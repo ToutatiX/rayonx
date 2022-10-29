@@ -1,13 +1,17 @@
 {
     "project_name" : "RAYONX",
-    "city": "Zürich",
+    "city": "Nancy",
+    "document_delivery": "2022-10-29",
+    "client" : "Matthieu Melenennec",
+    "order": 1,
+    "fablab" : "SPH ETH Zürich",
     "bom" : {
         "sourced" : [
             [
                 "Amplifier",
                 "PAM8043",
                 "AzDelivery",
-                4
+                1
             ],
             [
                 "M3 Screw",
@@ -20,6 +24,12 @@
                 "M3x4mm Cap head",
                 "any",
                 4
+            ],
+            [
+                "M3 Insert",
+                "M3x4.5mm Insert",
+                "any",
+                7
             ]
         ],
         "non-sourced" : {
@@ -45,7 +55,7 @@
                 [
                     "BoxFront",
                     1,
-                    "Pin",
+                    "Pin 25mm",
                     130,
                     90
                 ],
