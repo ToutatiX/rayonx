@@ -7,8 +7,8 @@ from pylatex.package import Package
 from pylatex import Document, Section, UnsafeCommand, LongTabu, Tabu, Center
 from pylatex.utils import NoEscape, bold
 import json
+from utils.RenderSTL import renderSTL
 from datetime import datetime, timedelta
-from PyPDF2 import PdfMerger, PdfFileMerger
 
 dirname = os.path.dirname(__file__)
 
@@ -24,6 +24,11 @@ geometry_options = {
 doc = Document(page_numbers=True, documentclass='extarticle', inputenc='utf8', geometry_options=geometry_options, indent=False, lmodern = False)
 
 doc.packages.append(Package('raleway', 'default'))
+doc = Document('test', geometry_options=geometry_options)
+
+doc.preamble.append(Command('usepackage', 'multicol'))
+
+
 
 try:
     info = json.load(open(os.path.join(dirname, "../configs/product.config.json")))
@@ -73,6 +78,15 @@ subtitle_command = UnsafeCommand('newcommand', '\subtitle', options=1,
 
 doc.append(subtitle_command)
 
+class SubSubTitle(CommandBase):
+    _latex_name = 'subsubtitle'
+    packages = [Package('color')]
+
+subsubtitle_command = UnsafeCommand('newcommand', '\subsubtitle', options=1,
+                             extra_arguments=r'\noindent\colorbox{black}{\large{\textcolor{white}{\textbf{\MakeUppercase{#1}}}}}\\ \\')
+
+doc.append(subsubtitle_command)
+
 class Title(CommandBase):
     _latex_name = 'hugetitle'
     packages = [Package('color'), Package('moresize')]
@@ -95,6 +109,7 @@ with doc.create(MiniPage(align='c')) as logo_wrapper:
             logo_file = os.path.join(dirname, './public/Logo.png')
             logo_wrapper.append(StandAloneGraphic(image_options="width=25mm",
                                 filename=logo_file))
+        
 
 doc.append(VerticalSpace('4mm'))
 doc.append(LineBreak())
@@ -137,6 +152,8 @@ with doc.create(MiniPage(align='c')):
         doc.append(LineBreak())
         delivery_info.append("Order Number:")
         doc.append(LineBreak())
+        delivery_info.append("Serial Number:")
+        doc.append(LineBreak())
         delivery_info.append("Client name:")
         doc.append(LineBreak())
         delivery_info.append("FabLab:")
@@ -149,6 +166,8 @@ with doc.create(MiniPage(align='c')):
         doc.append(LineBreak())
         delivery_info.append(info["order"])
         doc.append(LineBreak())
+        delivery_info.append(info["serial"])
+        doc.append(LineBreak())        
         delivery_info.append(info["client"])
         doc.append(LineBreak())
         delivery_info.append(info["fablab"])
@@ -208,10 +227,85 @@ with doc.create(LongTable("c|c|c|c|c|c")) as data_table:
         data_table.add_row(row)
 
 
+#doc.content_separator
+
+doc.append(NoEscape(r'\begin{multicols}{2}'))
+
+dims, preview_file  = renderSTL("Main")
+doc.append(LineBreak())
+
+with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
+    doc.append(SubSubTitle(arguments=Arguments('Main')))
+    doc.append(LineBreak())
+    with doc.create(MiniPage(width=str((21-2*margin)/2-0.5)+"cm", align='c')) as preview:
+        preview.append(StandAloneGraphic(image_options="width="+str((21-2*margin)/2-2)+"cm",
+                                filename=preview_file))
+    doc.append(LineBreak())
+    doc.append("Width: "+str(dims[0])+ " mm")
+    doc.append(LineBreak())
+    doc.append("Depth: "+str(dims[1])+ " mm")
+    doc.append(LineBreak())
+    doc.append("Height: "+str(dims[2])+ " mm")
+
+dims, preview_file = renderSTL("BoxBack")
+doc.append(LineBreak())
+
+with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
+    doc.append(SubSubTitle(arguments=Arguments('BoxBack')))
+    doc.append(LineBreak())
+    with doc.create(MiniPage(width=str((21-2*margin)/2-0.5)+"cm", align='c')) as preview:
+        preview.append(StandAloneGraphic(image_options="width="+str((21-2*margin)/2-2)+"cm",
+                                filename=preview_file))
+    doc.append(LineBreak())
+    doc.append(LineBreak())
+    doc.append("Width: "+str(dims[0])+ " mm")
+    doc.append(LineBreak())
+    doc.append("Depth: "+str(dims[1])+ " mm")
+    doc.append(LineBreak())
+    doc.append("Height: "+str(dims[2])+ " mm")
+
+dims, preview_file  = renderSTL("Main")
+doc.append(LineBreak())
+
+with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
+    doc.append(SubSubTitle(arguments=Arguments('Main')))
+    doc.append(LineBreak())
+    with doc.create(MiniPage(width=str((21-2*margin)/2-0.5)+"cm", align='c')) as preview:
+        preview.append(StandAloneGraphic(image_options="width="+str((21-2*margin)/2-2)+"cm",
+                                filename=preview_file))
+    doc.append(LineBreak())
+    doc.append("Width: "+str(dims[0])+ " mm")
+    doc.append(LineBreak())
+    doc.append("Depth: "+str(dims[1])+ " mm")
+    doc.append(LineBreak())
+    doc.append("Height: "+str(dims[2])+ " mm")
+
+dims, preview_file = renderSTL("BoxBack")
+doc.append(LineBreak())
+
+with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
+    doc.append(SubSubTitle(arguments=Arguments('BoxBack')))
+    doc.append(LineBreak())
+    with doc.create(MiniPage(width=str((21-2*margin)/2-0.5)+"cm", align='c')) as preview:
+        preview.append(StandAloneGraphic(image_options="width="+str((21-2*margin)/2-2)+"cm",
+                                filename=preview_file))
+    doc.append(LineBreak())
+    doc.append(LineBreak())
+    doc.append("Width: "+str(dims[0])+ " mm")
+    doc.append(LineBreak())
+    doc.append("Depth: "+str(dims[1])+ " mm")
+    doc.append(LineBreak())
+    doc.append("Height: "+str(dims[2])+ " mm")
+
+doc.append(NoEscape(r'\end{multicols}'))
+
+
+doc.append(LineBreak())
 
 """
 CNC Machines
 """
+doc.append(VerticalSpace("4mm"))
 
 doc.append(SubTitle(arguments=Arguments('CNC Machine')))
 
@@ -247,16 +341,4 @@ with doc.create(LongTable("c|c|c|c|c")) as data_table:
 PDF GENERATION
 """
 
-doc.generate_pdf(os.path.join(dirname, "../tmp"), clean_tex=True)
-
-merger = PdfMerger()
-merger.append(os.path.join(dirname, "../scripts/public/FrontPage.pdf"))
-merger.append(os.path.join(dirname, "../tmp.pdf"))
-
-merger.write(os.path.join(dirname, "../InstructionsHardware.pdf"))
-merger.close()
-
-try:
-    os.remove(os.path.join(dirname, "../tmp.pdf"))
-except:
-    print("Could not delete tmp pdf file")
+doc.generate_pdf(os.path.join(dirname, "../InstructionsHardware"), clean_tex=True)
