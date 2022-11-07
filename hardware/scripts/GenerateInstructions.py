@@ -5,7 +5,7 @@ from pylatex import Document, LongTable, MultiColumn, MiniPage, LineBreak, Verti
 from pylatex.base_classes import Environment, CommandBase, Arguments
 from pylatex.package import Package
 from pylatex import Document, Section, UnsafeCommand, LongTabu, Tabu, Center
-from pylatex.utils import NoEscape, bold
+from pylatex.utils import NoEscape, bold, escape_latex
 import json
 from utils.RenderSTL import renderSTL
 from datetime import datetime, timedelta
@@ -19,16 +19,19 @@ geometry_options = {
     "paper" : "a4paper",
 	"headheight":"0.75cm",
 	"footskip":"1cm",
-	"headsep":"0.5cm"
+	"headsep":"0.5cm",
+    "columnsep":"1cm"
 }
 doc = Document(page_numbers=True, documentclass='extarticle', inputenc='utf8', geometry_options=geometry_options, indent=False, lmodern = False)
 
 doc.packages.append(Package('raleway', 'default'))
 doc = Document('test', geometry_options=geometry_options)
 
-doc.preamble.append(Command('usepackage', 'multicol'))
+doc.preamble.append(Command('usepackage', 'multicol', 'hyperref'))
 
-
+def hyperlink(url,text):
+    text = escape_latex(text)
+    return NoEscape(r'\href{' + url + '}{' + text + '}')
 
 try:
     info = json.load(open(os.path.join(dirname, "../configs/product.config.json")))
@@ -74,7 +77,7 @@ class SubTitle(CommandBase):
     packages = [Package('color')]
 
 subtitle_command = UnsafeCommand('newcommand', '\subtitle', options=1,
-                             extra_arguments=r'\noindent\colorbox{black}{\Large{\textcolor{white}{\textbf{\MakeUppercase{#1}}}}}\\ \\')
+                             extra_arguments=r'\noindent\colorbox{black}{\Large{\textcolor{white}{\textbf{\MakeUppercase{#1}}}}}')
 
 doc.append(subtitle_command)
 
@@ -83,7 +86,7 @@ class SubSubTitle(CommandBase):
     packages = [Package('color')]
 
 subsubtitle_command = UnsafeCommand('newcommand', '\subsubtitle', options=1,
-                             extra_arguments=r'\noindent\colorbox{black}{\large{\textcolor{white}{\textbf{\MakeUppercase{#1}}}}}\\ \\')
+                             extra_arguments=r'\noindent\colorbox{black}{\large{\textcolor{white}{\textbf{\MakeUppercase{#1}}}}}')
 
 doc.append(subsubtitle_command)
 
@@ -125,7 +128,7 @@ with doc.create(MiniPage(align='l')):
                 logo_wrapper.append(StandAloneGraphic(image_options="width=7mm",
                                     filename=logo_file))
             doc.append(HorizontalSpace('4mm'))
-            doc.append(Hyperref("toutatix.fr", "toutatix.fr")) ; doc.append(LineBreak())
+            doc.append(hyperlink("toutatix.fr", "toutatix.fr"))
         doc.append(LineBreak())
         with doc.create(MiniPage(width=str(1/5*(21-2*margin))+r"cm", align='l')):
             with doc.create(MiniPage(width=r"5mm", align='l')) as logo_wrapper:
@@ -133,14 +136,13 @@ with doc.create(MiniPage(align='l')):
                 logo_wrapper.append(StandAloneGraphic(image_options="width=7mm",
                                     filename=logo_file))
             doc.append(HorizontalSpace('4mm'))
-            doc.append(Hyperref("mailto:eliott.sarrey@toutatix.fr","info@toutatix.fr"))
+            doc.append(hyperlink("mailto:eliott.sarrey@toutatix.fr","info@toutatix.fr"))
 
 
 """
 DELIVERY INFORMATION AND FABLAB NAME
 """
 
-doc.content_separator
 doc.append(VerticalSpace('8mm'))
 doc.append(LineBreak())
 
@@ -172,7 +174,6 @@ with doc.create(MiniPage(align='c')):
         doc.append(LineBreak())
         delivery_info.append(info["fablab"])
 
-doc.content_separator
 doc.append(VerticalSpace('12mm'))
 doc.append(LineBreak())
 
@@ -182,6 +183,8 @@ SOURCED COMPONENTS SECTION
 """
 
 doc.append(SubTitle(arguments=Arguments('Sourced Components')))
+doc.append(VerticalSpace("4mm"))
+doc.append(LineBreak())
 
 doc.append("Components to order from a local reseller. Those components are in every RayonX entity and some of them are common in ToutatiX's products.")
 
@@ -193,13 +196,14 @@ with doc.create(LongTable('c|c|c|c')) as data_table:
         data_table.add_row(row)
 
 
-doc.content_separator
 
 """
 RAW MATERIALS SECTION
 """
 
 doc.append(SubTitle(arguments=Arguments('Raw Materials')))
+doc.append(VerticalSpace("4mm"))
+doc.append(LineBreak())
 
 doc.append("Raw materials to have in order to be able to manufacture all the missing parts.")
 
@@ -210,12 +214,16 @@ with doc.create(LongTable('c|c')) as data_table:
     for row in materials.items():
         data_table.add_row(row)
 
+doc.append(VerticalSpace("4mm"))
+doc.append(LineBreak())
 
 """
 3D PRINTS
 """
 
 doc.append(SubTitle(arguments=Arguments('3D Prints')))
+doc.append(LineBreak())
+doc.append(VerticalSpace("4mm"))
 
 doc.append("List of the parts to be 3D printed")
 
@@ -227,12 +235,9 @@ with doc.create(LongTable("c|c|c|c|c|c")) as data_table:
         data_table.add_row(row)
 
 
-#doc.content_separator
-
-doc.append(NoEscape(r'\begin{multicols}{2}'))
+doc.append(LineBreak())
 
 dims, preview_file  = renderSTL("Main")
-doc.append(LineBreak())
 
 with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
     doc.append(SubSubTitle(arguments=Arguments('Main')))
@@ -248,7 +253,6 @@ with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
     doc.append("Height: "+str(dims[2])+ " mm")
 
 dims, preview_file = renderSTL("BoxBack")
-doc.append(LineBreak())
 
 with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
     doc.append(SubSubTitle(arguments=Arguments('BoxBack')))
@@ -264,42 +268,7 @@ with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
     doc.append(LineBreak())
     doc.append("Height: "+str(dims[2])+ " mm")
 
-dims, preview_file  = renderSTL("Main")
-doc.append(LineBreak())
-
-with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
-    doc.append(SubSubTitle(arguments=Arguments('Main')))
-    doc.append(LineBreak())
-    with doc.create(MiniPage(width=str((21-2*margin)/2-0.5)+"cm", align='c')) as preview:
-        preview.append(StandAloneGraphic(image_options="width="+str((21-2*margin)/2-2)+"cm",
-                                filename=preview_file))
-    doc.append(LineBreak())
-    doc.append("Width: "+str(dims[0])+ " mm")
-    doc.append(LineBreak())
-    doc.append("Depth: "+str(dims[1])+ " mm")
-    doc.append(LineBreak())
-    doc.append("Height: "+str(dims[2])+ " mm")
-
-dims, preview_file = renderSTL("BoxBack")
-doc.append(LineBreak())
-
-with doc.create(MiniPage(width = str((21-2*margin)/2-0.5)+"cm", align='c')) :
-    doc.append(SubSubTitle(arguments=Arguments('BoxBack')))
-    doc.append(LineBreak())
-    with doc.create(MiniPage(width=str((21-2*margin)/2-0.5)+"cm", align='c')) as preview:
-        preview.append(StandAloneGraphic(image_options="width="+str((21-2*margin)/2-2)+"cm",
-                                filename=preview_file))
-    doc.append(LineBreak())
-    doc.append(LineBreak())
-    doc.append("Width: "+str(dims[0])+ " mm")
-    doc.append(LineBreak())
-    doc.append("Depth: "+str(dims[1])+ " mm")
-    doc.append(LineBreak())
-    doc.append("Height: "+str(dims[2])+ " mm")
-
-doc.append(NoEscape(r'\end{multicols}'))
-
-
+doc.append(VerticalSpace("4mm"))
 doc.append(LineBreak())
 
 """
@@ -308,6 +277,8 @@ CNC Machines
 doc.append(VerticalSpace("4mm"))
 
 doc.append(SubTitle(arguments=Arguments('CNC Machine')))
+doc.append(LineBreak())
+doc.append(VerticalSpace("4mm"))
 
 doc.append("List of the parts to be manufactured using a CNC machine")
 
@@ -324,6 +295,7 @@ Laser Cutting
 """
 
 doc.append(SubTitle(arguments=Arguments('Laser Cutting')))
+doc.append(LineBreak())
 
 doc.append("List of the parts to laser cut.")
 
@@ -335,10 +307,8 @@ with doc.create(LongTable("c|c|c|c|c")) as data_table:
     for row in info["bom"]["non-sourced"]["laser-cutting"]:
         data_table.add_row(row)
 
-
-
 """
 PDF GENERATION
 """
 
-doc.generate_pdf(os.path.join(dirname, "../InstructionsHardware"), clean_tex=True)
+doc.generate_pdf(os.path.join(dirname, "../InstructionsHardware"), clean_tex=False)
