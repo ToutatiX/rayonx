@@ -1,36 +1,91 @@
-#include <ESP8266React.h>
-#include <LightMqttSettingsService.h>
-#include <LightStateService.h>
+/*
+ * ESP-Webradio
+ * Following Parts:
+ * - audio          : streaming and decoding audio data
+ * - lcdisplay      : show station data an LCD
+ * - rotary         : initialize and handle choosing senders
+ * - senderlist     : senderlist by flash-values - or, if not present, by defaults
+ * - senderconfig   : asynchronus webinterface to store sendernames und -urls
+ *   senderconf.h   : html-template for above
+ * - wlanconfig     : seperate program to get WLAN-config per webinterface
+ *   wlanconf.h     : html-template for above
+ *   
+ *   Used libraries (included in their parts): 
+ *   - ESPwebRadio  : Preferences.h
+ *   - audio        : ESP8266audio (AudioFileSourceICYStream.h, AudioFileSourceBuffer.h, AudioGeneratorMP3.h, AudioOutputI2S.h)
+ *   - rotary       : AiEsp32RotaryEncoder.h
+ *   - senderconfig : ESPAsyncWebServer.h, Preferences.h
+ *   - wlanconfig   : WiFi.h, Preferences.h, ESPAsyncWebServer.h
+ */
 
-#define SERIAL_BAUD_RATE 115200
+#include <Arduino.h>
+#include <Preferences.h>
 
-AsyncWebServer server(80);
-ESP8266React esp8266React(&server);
-LightMqttSettingsService lightMqttSettingsService =
-    LightMqttSettingsService(&server, esp8266React.getFS(), esp8266React.getSecurityManager());
-LightStateService lightStateService = LightStateService(&server,
-                                                        esp8266React.getSecurityManager(),
-                                                        esp8266React.getMqttClient(),
-                                                        &lightMqttSettingsService);
+#define DEBUG
+#define LOG_LEVEL_PRINT   4
 
+#define STATIONS 6 //number of available stations
+
+struct Station{
+  char url[100]; 
+};
+
+Station stationlist[STATIONS] = {
+  {"http://ouifm5.ice.infomaniak.ch/ouifm5.mp3"},
+  {"http://ais-live.cloud-services.paris:8000/europe1.mp3"},
+  {"http://jazz.streamr.ru/jazz-64.mp3"},
+  {"http://direct.franceinter.fr/live/franceinter-lofi.mp3"},
+  {"http://direct.franceinter.fr/live/franceinter-midfi.mp3"},
+  {"http://ouifm5.ice.infomaniak.ch/ouifm5.mp3"}
+};
+
+
+
+//global variables
+uint8_t curStation = 0;   //index for current selected station in stationlist
+uint8_t actStation = 0;   //index for current station in station list used for streaming 
+uint32_t lastchange = 0;  //time of last selection change
+
+Preferences preferences;
+
+boolean play = true;
+
+#include <log_handler.h>
+#include <senderlist.h>
+#include <audio_handler.h>
+#include <rotary.h>
+#include <wlanconfig.h>
+
+
+//setup
 void setup() {
-  // start serial and filesystem
-  Serial.begin(SERIAL_BAUD_RATE);
 
-  // start the framework and demo project
-  esp8266React.begin();
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
 
-  // load the initial light settings
-  lightStateService.begin();
+  #ifdef DEBUG
+    Serial.begin(115200);
+    delay(1000);
+  #endif
+  
+  setup_senderList();
+  setup_audio();
+  setup_rotary();
 
-  // start the light service
-  lightMqttSettingsService.begin();
+  if (!makeWLAN()) {
+    makeConfigAP();
+  }
 
-  // start the server
-  server.begin();
+  curStation = 0;
+  actStation = curStation;
+  startUrl();
+  initTime();
 }
 
+/**
+ * Main loop of the program. If the buffer end is reached, we simply start again.
+*/
 void loop() {
-  // run the framework's loop function
-  esp8266React.loop();
+  loop_audio();
+  rotary_loop();
 }
