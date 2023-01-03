@@ -1,7 +1,6 @@
 from utils.DXFHandler import *
 import json
 import imageio.v3 as iio
-from pyradios import RadioBrowser
 import numpy as np
 from matplotlib.offsetbox import (OffsetImage, AnnotationBbox)
 
@@ -10,6 +9,8 @@ def main():
     dirname = os.path.dirname(__file__)
     folder = os.path.join(dirname, "../cutting/")
     doc, msp = openDXF(folder+"DXF/FrontPanel.DXF")
+
+    preset_name = input("Enter preset name:")
 
     changeColorAll(msp, 1)
 
@@ -22,10 +23,10 @@ def main():
             [center_y - 18*hs,18/2],  [center_y - 18*hs, -18/2]]
 
     try:
-        presets = json.load(open(folder+'../configs/presets.config.json'))
+        presets = json.load(open(folder+'../configs/presets.'+preset_name+'.config.json'))
         presets = presets[:6]
     except IOError:
-        print(f"File `presets.config` not found :(")
+        print("File `presets."+preset_name+".config.json not found :(")
         sys.exit(1)
 
     fig, ax = createFigure(doc)

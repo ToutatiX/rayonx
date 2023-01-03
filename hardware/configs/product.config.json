@@ -1,10 +1,10 @@
 {
     "project_name" : "RAYONX",
-    "city": "Nancy",
+    "city": "Zürich",
     "document_delivery": "2022-10-29",
     "client" : "Matthieu Melenennec",
     "order": 1,
-    "fablab" : "SPH ETH Zürich",
+    "fablab" : "Zürich",
     "serial" : "6e40a25fd1d3e05a4d1c7dd0862d02ad",
     "bom" : {
         "sourced" : [

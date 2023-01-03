@@ -56,8 +56,8 @@ def main():
     msp.add_mtext(info["project_name"], style_title).set_location((center_y, -3.8))
     msp.add_mtext("Par ToutatiX", style_subtitle).set_location((center_y, -8))
     msp.add_mtext("Manufacturé par", style_subtitle).set_location((center_y, -14))
-    msp.add_mtext(info["serial"][:16], style_subtitle).set_location((0, -12.5))
-    msp.add_mtext(info["serial"][16:], style_subtitle).set_location((0, -15.5))
+    # msp.add_mtext("Joyeux Noël 2022 Maman !", style_subtitle).set_location((0, -14.))
+    #msp.add_mtext(info["serial"][16:], style_subtitle).set_location((0, -15.5))
 
     # Add lines between the title and the subtitle
     hatch = msp.add_hatch(color=250)

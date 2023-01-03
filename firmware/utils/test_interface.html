@@ -1,8 +1,11 @@
-const char MAIN_page[] PROGMEM = R"=====(
 <!DOCTYPE html>
 <html>
     <head>
         <style>
+            :root {
+                --scale: calc(min(14vw, 6vh));
+            }
+
             main {
                 all: none;
             }
@@ -12,6 +15,7 @@ const char MAIN_page[] PROGMEM = R"=====(
                 background-color: black;
                 color: white;
                 font-weight: 200;
+                font-size: calc(var(--scale) / 3);
                 letter-spacing: 1px;
             }
             main {
@@ -24,14 +28,14 @@ const char MAIN_page[] PROGMEM = R"=====(
             }
             .title {
                 font-weight: 900;
-                font-size: 52px;
+                font-size: var(--scale);
             }
             svg {
-                width: 72px;
-                height: 60px;
+                width: calc(var(--scale) * 7 / 5);
+                height: calc(var(--scale) * 6 / 5);
             }
             section {
-                margin-top: 50px;
+                margin-top: var(--scale);
             }
             button {
                 all: unset;
@@ -39,13 +43,19 @@ const char MAIN_page[] PROGMEM = R"=====(
             input {
                 all: unset;
                 text-align: left;
+                width: 100%;
+            }
+            select {
+                all: unset;
+                text-align: left;
+                width: 100%;
             }
             .btn {
-            margin-top: 30px;
-            line-height: 50px;
-            height: 50px;
+            margin-top: calc(var(--scale) * 3 / 5);
+            line-height: var(--scale);
+            height: var(--scale);
             text-align: center;
-            width: 250px;
+            width: calc(var(--scale) * 5);
             cursor: pointer;
             }
             .btn-one {
@@ -73,7 +83,7 @@ const char MAIN_page[] PROGMEM = R"=====(
             transform: scale(0.1, 1);
             }
             .btn-one:hover span {
-            letter-spacing: 20px;
+            letter-spacing: calc(var(--scale) * 2 / 5);
             }
             .btn-one:hover::before {
             opacity: 1; 
@@ -104,7 +114,9 @@ const char MAIN_page[] PROGMEM = R"=====(
                 <form method="POST">
                     <div>WIFI'S NAME</div>
                     <p>
-                        <input type="text" name="ssid" value="*ssid*" placeholder="Name">
+                        <select id="ssid" name="ssid">
+                            <option value='None'>None</option>
+                        </select>
                     </p>
                     <div>PASSWORD</div>
                     <p>
@@ -116,4 +128,3 @@ const char MAIN_page[] PROGMEM = R"=====(
         </main>
     </body>
 </html>
-)=====";
