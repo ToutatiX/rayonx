@@ -20,12 +20,12 @@ struct Station{
 };
 
 Station stationlist[6] = {
-  {"http://direct.franceinter.fr/live/franceinter-midfi.mp3"},
-  {"http://icecast.radiofrance.fr/fbsudlorraine-midfi.mp3"},
-  {"http://icecast.radiofrance.fr/fip-midfi.mp3"},
-  {"http://icecast.radiofrance.fr/franceculture-midfi.mp3"},
-  {"http://stream.live.vc.bbcmedia.co.uk/bbc_radio_fourfm"},
-  {"http://stream.live.vc.bbcmedia.co.uk/bbc_radio_two"}
+  {"http://radioclassique.ice.infomaniak.ch/radioclassique-high.mp3"},
+  {"http://ouifm5.ice.infomaniak.ch/ouifm5.mp3"},
+  {"http://jazz-wr18.ice.infomaniak.ch/jazz-wr18-128.mp3"},
+  {"http://cast3.my-control-panel.com:8170/stream"},
+  {"http://stream.live.vc.bbcmedia.co.uk/bbc_radio_two"},
+  {"http://direct.franceinter.fr/live/franceinter-midfi.mp3"}
 };
 
 uint8_t curStation = -1;   

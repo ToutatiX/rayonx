@@ -53,7 +53,7 @@ namespace Selector {
   {
     for (int p = 0; p < 3; p++)
     {
-      pinMode(inputPins[p], INPUT);
+      pinMode(inputPins[p], INPUT_PULLUP);
       attachInterrupt(inputPins[p], readEncoderISR, CHANGE);
     }
 

@@ -85,9 +85,9 @@ namespace Wlan {
     bool connectToWiFi(String ssid, String pwd) {
 
         Log::log(Log::LEVEL_STATS, Log::WLAN, "Connect to wifi: " + ssid + " using pwd: " + pwd);
-        WiFi.disconnect(true);
-        WiFi.softAPdisconnect(true);
-        delay(100);
+        // WiFi.disconnect(true);
+        // WiFi.softAPdisconnect(true);
+        // delay(100);
         WiFi.begin(ssid.c_str(), pwd.c_str());
 
         if (WiFi.waitForConnectResult(WIFI_TIMEOUT) == WL_CONNECTED) {
@@ -157,8 +157,8 @@ namespace Wlan {
   bool makeWLAN() {
       Memory::read(&ssid, &password);
 
-      WiFi.disconnect(true);
-      WiFi.softAPdisconnect(true);
+      // WiFi.disconnect(true);
+      // WiFi.softAPdisconnect(true);
       WiFi.mode(WIFI_STA);
 
       if (ssid == "" || password == "") {
@@ -234,6 +234,8 @@ namespace Wlan {
           Memory::update(ssid, password);
           delay(200);
           Log::log(Log::LEVEL_VERBOSE, Log::ESP, "Restarting ESP.");
+          WiFi.softAPdisconnect(true);
+          delay(1000);
           ESP.restart();
         }
         else {
