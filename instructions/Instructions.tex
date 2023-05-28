@@ -1,0 +1,91 @@
+\makeatletter
+	\def\input@path{{./src/tex/}}
+\makeatother
+\documentclass[9pt]{developercv}
+
+\begin{document}
+\setlength{\tabcolsep}{16pt}
+\renewcommand{\arraystretch}{1.5}
+\includepdf[pages=-]{./src/tex/firstpage.pdf}
+\begin{center}
+	\includegraphics[scale=0.06]{./src/tex/Logo.png}
+\end{center}
+\begin{minipage}[t]{0.48\textwidth}
+	\vspace{-\baselineskip}
+	\colorbox{black}{{\HUGE\textcolor{white}{\textbf{\MakeUppercase{RayonX web radio}}}}}\\
+	\vspace{6pt}
+	\huge Instructions par ToutatiX
+\end{minipage}
+\begin{minipage}[t]{0.275\textwidth}
+	\vspace{-\baselineskip}
+	\hspace{1cm}
+	\end{minipage}
+\begin{minipage}[t]{0.275\textwidth}
+	\vspace{-\baselineskip}
+	\icon{Globe}{12}{\href{https://www.toutatix.fr}{toutatix.fr}}\\
+	\icon{At}{12}{\href{mailto:info@toutatix.fr}{info@toutatix.fr}}\\	
+\end{minipage}
+
+\vspace{5mm}
+\begin{center}
+	\huge \textbf{Bill of Materials}
+\end{center}
+
+Here is the list of all the sourced components required to build this product:
+
+\begin{itemize}
+	\item 1x Amplifier
+	\item 1x Speaker
+	\item 3x Limit Switch
+	\item 1x ESP32
+	\item 7x M3x10 HEX Screw
+	\item 7x M3x4 Brass inserts
+\end{itemize}
+
+
+\vspace{5mm}
+\begin{center}
+	\huge \textbf{3D Printing}
+\end{center}
+
+\cvsect{Step 1}
+
+The instructions are...
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.500000\textwidth]{./src/graphics/test.jpeg}
+	\caption{Eliott}
+\end{figure}
+
+\vspace{5mm}
+\begin{center}
+	\huge \textbf{Laser Cut}
+\end{center}
+
+\cvsect{Step 1}
+
+The instructions are...
+
+\pagebreak
+
+\vspace{55 mm}
+
+\vspace{5mm}
+\begin{center}
+	{\HUGE\textbf{\MakeUppercase{Appendix I}}}
+\end{center}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+\textbf{Name}&\textbf{Quantity}&\textbf{Reference}&\textbf{Link}&\textbf{Supplier}\\
+\hline
+Name&Quantity&Reference&Link&Supplier\\
+\hline
+Name&Quantity&Reference&Link&Supplier\\
+\end{tabular}
+\end{table}
+
+
+\end{document}

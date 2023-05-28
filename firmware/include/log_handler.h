@@ -21,6 +21,7 @@ namespace Log {
     const LOG_NAME_td WLAN      = "WLAN ";
     const LOG_NAME_td ESP       = "ESP  ";
     const LOG_NAME_td FS        = "FS   ";
+    const LOG_NAME_td VOL       = "VOL  ";
 
     #ifdef DEBUG
 

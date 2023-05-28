@@ -16,16 +16,16 @@
 #include <Arduino.h>
 
 struct Station{
-  char url[100]; 
+  char url[256]; 
 };
 
 Station stationlist[6] = {
+  {"http://windu.radionotredame.net/RadioNotreDame-Fm.mp3"},
+  {"http://ais-live.cloud-services.paris:8000/europe1.mp3"},
+  {"http://icecast.radiofrance.fr/franceinfo-midfi.mp3"},
   {"http://radioclassique.ice.infomaniak.ch/radioclassique-high.mp3"},
-  {"http://ouifm5.ice.infomaniak.ch/ouifm5.mp3"},
-  {"http://jazz-wr18.ice.infomaniak.ch/jazz-wr18-128.mp3"},
-  {"http://cast3.my-control-panel.com:8170/stream"},
-  {"http://stream.live.vc.bbcmedia.co.uk/bbc_radio_two"},
-  {"http://direct.franceinter.fr/live/franceinter-midfi.mp3"}
+  {"http://stream.live.vc.bbcmedia.co.uk/bbc_radio_three"},
+  {"http://icecast.radiofrance.fr/franceculture-lofi.mp3"}
 };
 
 uint8_t curStation = -1;   
@@ -39,7 +39,9 @@ uint32_t lastchange = 0;
 #include <memory.h>
 #include <audio_handler.h>
 #include <wlan_handler.h>
+#include <mqtt_handler.h>
 #include <selector_handler.h>
+#include <volume_handler.h>
 
 /**
  * @brief MainSetup
@@ -51,7 +53,11 @@ void setup() {
   if (Wlan::makeWLAN()) {
     Selector::setup();
     AudioPlayer::setup();
+    Volume::setup();
     Feedback::status = Feedback::READY;
+    #ifdef DEBUG
+      MQTT::setup();
+    #endif
   }
   else {
     Wlan::createAP();
@@ -77,6 +83,10 @@ void loop() {
     if (Wlan::loopSTA()) {
       Selector::loop();
       AudioPlayer::loop();
+
+      if (millis() % 20 == 0) {
+        AudioPlayer::setVolume(Volume::get());
+      }
     } 
   }
 }

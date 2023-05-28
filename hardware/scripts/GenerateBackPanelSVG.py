@@ -36,7 +36,7 @@ def main():
 
     changeColorAll(msp, 1)
 
-    center_y = 52
+    center_y = 52/2
 
     style_title = dxfattribs={
         "style": "myStandard",
@@ -52,27 +52,28 @@ def main():
         "color": 250
         }
 
-    msp.add_mtext("Made in "+info["city"], style_subtitle).set_location((center_y, 20))
-    msp.add_mtext(info["project_name"], style_title).set_location((center_y, -3.8))
-    msp.add_mtext("Par ToutatiX", style_subtitle).set_location((center_y, -8))
-    msp.add_mtext("Manufacturé par", style_subtitle).set_location((center_y, -14))
-    # msp.add_mtext("Joyeux Noël 2022 Maman !", style_subtitle).set_location((0, -14.))
+    # msp.add_mtext("Made in "+info["city"], style_subtitle).set_location((center_y, 20))
+    msp.add_mtext(info["project_name"], style_title).set_location((center_y, -5.8))
+    msp.add_mtext("Par ToutatiX", style_subtitle).set_location((center_y, -9.5))
+    msp.add_mtext("Manufactured in "+info["city"]+" by", style_subtitle).set_location((center_y, -16))
+    msp.add_mtext("Joyeux anniversaire !", style_subtitle).set_location((center_y, 16))
     #msp.add_mtext(info["serial"][16:], style_subtitle).set_location((0, -15.5))
 
     # Add lines between the title and the subtitle
     hatch = msp.add_hatch(color=250)
     hatch.paths.add_polyline_path(
-        [(center_y-16, 0), (center_y+16, 0), (center_y+16, -0.2), (center_y-16, -0.2)], is_closed=True
+        [(center_y-14, -2), (center_y+14, -2), (center_y+14, -2.2), (center_y-14, -2.2)], is_closed=True
     )
     hatch2 = msp.add_hatch(color=250)
     hatch2.paths.add_polyline_path(
-        [(center_y-16, 0.4), (center_y+16, 0.4), (center_y+16, 0.8), (center_y-16, 0.8)], is_closed=True
+        [(center_y-14, -1.6), (center_y+14, -1.6), (center_y+14, -1.2), (center_y-14, -1.2)], is_closed=True
     )
 
+    # Add logo
     fig, ax = createFigure(doc)
     logo = plt.imread(folder+'../scripts/public/Logo.png')
     imagebox = OffsetImage(logo, zoom=40/1080)
-    ab = AnnotationBbox(imagebox, (center_y, 6.3), frameon = False)
+    ab = AnnotationBbox(imagebox, (center_y, 4.3), frameon = False)
     ax.add_artist(ab)
 
     fig.savefig(folder+"BackPanel.svg", format='svg')
@@ -82,6 +83,7 @@ def main():
     del fin[23:31]
     out = open(folder + "BackPanel.svg", 'wt')
     out.writelines(fin)
+    print("File saved to: " + folder + "BackPanel.svg")
     out.close()
 
 if __name__ == '__main__':

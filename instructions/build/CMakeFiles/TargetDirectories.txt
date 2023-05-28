@@ -1,0 +1,3 @@
+/Users/eliottsarrey/rayonx/instructions/build/CMakeFiles/main.dir
+/Users/eliottsarrey/rayonx/instructions/build/CMakeFiles/edit_cache.dir
+/Users/eliottsarrey/rayonx/instructions/build/CMakeFiles/rebuild_cache.dir

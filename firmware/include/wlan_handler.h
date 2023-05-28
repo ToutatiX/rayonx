@@ -52,6 +52,13 @@ namespace Wlan {
     String ssid;
     String password;
 
+    byte ip[] = {192,168,1,115};
+    byte gw[] = {192,168,1,1};
+    byte mask[] = {255,255,255,0};
+    byte dns[] = {194,41,3,193};
+    byte bssid[] = {0xF8, 0xD1, 0x11, 0x24, 0xB3, 0x84};
+    byte chnl = 4;
+
     unsigned long currentMillis;
     unsigned long previousMillis = 0; 
 
@@ -85,9 +92,8 @@ namespace Wlan {
     bool connectToWiFi(String ssid, String pwd) {
 
         Log::log(Log::LEVEL_STATS, Log::WLAN, "Connect to wifi: " + ssid + " using pwd: " + pwd);
-        // WiFi.disconnect(true);
-        // WiFi.softAPdisconnect(true);
-        // delay(100);
+        WiFi.enableSTA(true);
+        WiFi.mode(WIFI_STA);
         WiFi.begin(ssid.c_str(), pwd.c_str());
 
         if (WiFi.waitForConnectResult(WIFI_TIMEOUT) == WL_CONNECTED) {

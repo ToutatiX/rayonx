@@ -18,7 +18,7 @@ namespace Selector {
     #ifdef INPUT_PINS
       const byte inputPins[3]   = INPUT_PINS;
     #else 
-      const byte inputPins[3]   = {39, 35, 34};
+      const byte inputPins[3]   = {13, 5, 2};
     #endif
 
     #ifdef RESET_SEQ
@@ -27,7 +27,7 @@ namespace Selector {
       int     resetSequence[5]  = {0, 2, 4, 2, 0};
     #endif
 
-    const int conversion[8]     = {7, 1, 7, 4, 0, 5, 3, 2};
+    const int conversion[8]     = {8, 8, 3, 2, 4, 1, 5, 0};
     int       lastSelections[5] = {1, 1, 1, 1, 1};
     int       radio_index;
     byte      result;
@@ -51,14 +51,18 @@ namespace Selector {
   */
   void setup()
   {
+    pinMode(13, OUTPUT);
+    digitalWrite(13, HIGH);
+
     for (int p = 0; p < 3; p++)
     {
-      pinMode(inputPins[p], INPUT_PULLUP);
+      pinMode(inputPins[p], INPUT_PULLDOWN);
       attachInterrupt(inputPins[p], readEncoderISR, CHANGE);
     }
 
     result = 0;
       for (int bit = 0; bit < 3; bit++) {
+        Log::log(Log::LEVEL_WARNING, Log::SELECTOR, "Bit input: " + String(digitalRead(inputPins[bit])));
         bitWrite(result, bit, digitalRead(inputPins[bit]));
       }
     radio_index = conversion[result];
@@ -70,7 +74,7 @@ namespace Selector {
   */
   void loop()
   {
-    if (radio_index != 7 and radio_index != curStation)
+    if (radio_index != 8 && radio_index != curStation)
     {
       curStation = radio_index;
       lastchange = millis();
@@ -93,11 +97,13 @@ namespace Selector {
           Memory::clear();
           ESP.restart();
         }
-
+        #ifdef DEBUG
+          MQTT::publish(OUT_TOPIC, "Station selected " + String(curStation));
+        #endif
         Log::log(Log::LEVEL_VERBOSE, Log::SELECTOR, "Changing station to: " + String(actStation));
         AudioPlayer::play();
-        lastchange = 0;
-        radio_index = 7;
+        lastchange = millis();
+        radio_index = 8;
       } 
     }
   }

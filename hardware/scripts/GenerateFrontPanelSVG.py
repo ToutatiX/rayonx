@@ -1,3 +1,5 @@
+#USE PYTHON 
+
 from utils.DXFHandler import *
 import json
 import imageio.v3 as iio
@@ -14,13 +16,10 @@ def main():
 
     changeColorAll(msp, 1)
 
-    center_y = 52
+    center_x = 51.4
     hs = 0.86602540378
 
-
-    coor = [[center_y, 18], [center_y, -18],
-            [center_y + 18*hs,18/2],  [center_y + 18*hs, -18/2],
-            [center_y - 18*hs,18/2],  [center_y - 18*hs, -18/2]]
+    coor = [[center_x, 18], [center_x + 18*hs,18/2], [center_x + 18*hs, -18/2], [center_x, -18], [center_x - 18*hs, -18/2], [center_x - 18*hs, +18/2]]
 
     try:
         presets = json.load(open(folder+'../configs/presets.'+preset_name+'.config.json'))
@@ -37,8 +36,8 @@ def main():
         gray_icon = np.dot(icon, [0.2989, 0.5870, 0.1140, 0.])
         gray_icon = np.round(gray_icon).astype(np.uint8)
         gray_icon_as_rgba = np.concatenate((np.stack([gray_icon] * 3, axis=-1), [[[x] for x in y] for y in icon[:,:, -1]]), axis=2)
-        for y in range(0, icon.shape[0]):
-            for x in range(0, icon.shape[1]):
+        for y in range(0, icon.shape[1]):
+            for x in range(0, icon.shape[0]):
                 if (y-icon.shape[0]/2)**2/icon.shape[0]**2 + (x-icon.shape[1]/2)**2/icon.shape[1]**2 > 1/4*1.25:
                     gray_icon_as_rgba[x, y, -1] = 0
 
