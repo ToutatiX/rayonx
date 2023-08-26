@@ -86,7 +86,7 @@ void loop() {
 
       if (millis() % 20 == 0) {
         AudioPlayer::setVolume(Volume::get());
-      }
+      } // C'est de la merde ca, marche pas 0 fois sur 10
     } 
   }
 }
